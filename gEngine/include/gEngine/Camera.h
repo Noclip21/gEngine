@@ -19,8 +19,9 @@ public:
 	double delay;
 	
 	
-	void target(Surface *target);
-	void target(double posx,double posy);
+	Surface* target();
+	void	 target(Surface *target);
+	void	 target(double posx,double posy);
 
 	
 	Camera(	int		 screenWidth,

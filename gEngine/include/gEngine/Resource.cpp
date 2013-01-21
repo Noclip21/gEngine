@@ -9,6 +9,8 @@ vector<Resource::sPackage*> Resource::packages;
 
 bool Resource::cache(string file)
 {
+	if(file.size() <= 0) return false;
+
 	if(!hlInitialized)
 	{
 		hlInitialize();
@@ -16,26 +18,30 @@ bool Resource::cache(string file)
 	}
 	
 	// if(Utils::findObject(packages
-	hlUInt  package;
-	hlCreatePackage(hlGetPackageTypeFromName(file.c_str()),&package);
+	hlUInt  package = 0;
+	if(!hlCreatePackage(hlGetPackageTypeFromName(file.c_str()),&package)) return false;
 	hlBindPackage(package);
 
 	if(!hlPackageOpenFile(file.c_str(),HL_MODE_READ | HL_MODE_QUICK_FILEMAPPING)) return false;
+
+	int filesCount = hlFolderGetCount(hlPackageGetRoot());
+
+	if(filesCount <= 0) return false;
 
 	sPackage *s_package = new sPackage;
 			  s_package->name = file;
 			  packages.push_back(s_package);
 
-	int filesCount = hlFolderGetCount(hlPackageGetRoot());
 	for(int i=0; i<filesCount; ++i)
 	{
 		HLDirectoryItem	*pItem = hlFolderGetItem(hlPackageGetRoot(),i); 
 
 		if(hlItemGetType(pItem) == HL_ITEM_FILE)
 		{					
-			HLStream *pStream;
-			hlFileCreateStream(pItem,&pStream);
-			hlStreamOpen(pStream,HL_MODE_READ);
+			HLStream *pStream = 0;
+			if(!hlFileCreateStream(pItem,&pStream)) return false;
+
+			if(!hlStreamOpen(pStream,HL_MODE_READ)) return false;
 			
 			sFile *s_file = new sFile;
 				   s_file->name = string(hlItemGetName(pItem));

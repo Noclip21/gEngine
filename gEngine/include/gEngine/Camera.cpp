@@ -5,8 +5,9 @@
 vector<Camera*> Camera::objects;
 
 
-void Camera::target(Surface *target){ _target = target; }
-void Camera::target(double posx,double posy)
+Surface* Camera::target()				{ return _target;	}
+void	 Camera::target(Surface *target){ _target = target; }
+void	Camera::target(double posx,double posy)
 {
 	_target = NULL;
 	_x = posx;

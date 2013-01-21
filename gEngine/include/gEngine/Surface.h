@@ -37,6 +37,7 @@ public:
 	double				globalOriginX();
 	double				globalOriginY();
 	SDL_Surface*		getSurface();
+	int					depth();
 	Surface*			parent();
 	int					width();
 	int					height();
@@ -48,17 +49,20 @@ public:
 	void parent		(Surface *parent);
 
 
-	Surface(Surface *parent,
-			double	posx,
-			double	posy);
+	Surface(Surface *parent =	NULL,
+			double	posx =		0,
+			double	posy =		0);
 	virtual ~Surface();
 
 
+	void swapDepths		(int surfaceId1,int surfaceId2);
 	void addChild		(Surface *child);
 	void removeChild	(Surface *child);
 	virtual void blint	(Surface *surface);
 
 private:
+
+	int _depth;
 
 	SDL_Surface	*_surface;
 	Surface		*_parent;

@@ -13,6 +13,7 @@ pair<double,double>	Surface::avel()		 { return make_pair(avelx,avely);					}
 pair<double,double> Surface::origin()	 { return make_pair(ox,oy);							}
 SDL_Surface*		Surface::getSurface(){ return _surface;									}
 Surface*			Surface::parent()	 { return _parent;									}
+int					Surface::depth()	 { return _depth;									}
 int					Surface::width()	 { if(_surface) return _surface->w; else return 0;	}
 int					Surface::height()	 { if(_surface) return _surface->h; else return 0;	}
 
@@ -41,7 +42,7 @@ double Surface::globalOriginY()
 }
 void Surface::setSurface(SDL_Surface *surface)
 {
-	_surface = surface;
+	if(surface) _surface = surface;
 }
 void Surface::parent(Surface *parent)
 {
@@ -56,7 +57,8 @@ Surface::Surface(Surface *parent,
 				 double	  posy)
 {
 	objects.push_back(this);
-
+	
+	_depth = -1;
 	x =		posx;
 	y =		posy;
 	avelx =	0;
@@ -77,16 +79,40 @@ Surface::~Surface()
 	SDL_FreeSurface(_surface);
 	_surface = NULL;
 
+	if(alive(_parent))
+	{
+		Utils::removeObject(*this,_parent->children);
+		for(size_t i=_depth; i<_parent->children.size(); ++i)
+			_parent->children[i]->_depth = _depth;
+	}
+
 	Utils::removeObject(*this,objects);
-	if(alive(_parent)) Utils::removeObject(*this,_parent->children);
 }
 
 
 
+void Surface::swapDepths(int depth1,int depth2)
+{
+	if(children.size() > 1)
+	{
+		if( (depth1 >= 0 && depth2 < children.size()) &&
+			(depth1 >= 0 && depth2 < children.size()) &&
+			(depth1 != depth2))
+		{
+			children[depth1]->_depth = depth2;
+			children[depth2]->_depth = depth2;
+
+			Surface *temp = children[depth1];
+			children[depth1] = children[depth2];
+			children[depth2] = temp;
+		}
+	}
+}
 void Surface::addChild(Surface *child)
 {
 	if(alive(child))
 	{
+		child->_depth = children.size();
 		children.push_back(child);
 		child->_parent = this;
 	}
@@ -97,6 +123,7 @@ void Surface::removeChild(Surface *child)
 	{
 		Utils::removeObject(*child,children);
 		child->_parent = NULL;
+		child->_depth = -1;
 	}
 } 
 void Surface::blint(Surface *surface)

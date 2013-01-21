@@ -27,25 +27,25 @@ public:
 	int  numFrames();
 
 
-	Animation(	Surface *parent,
-				double posx,
-				double posy);
+	Animation(	Surface *parent = NULL,
+				double posx = 0,
+				double posy = 0);
 	~Animation();
 	
 
-	void setAnimation(string name);
-	void addAnimation(	string	name,
-						int		time,
-						string	sprites,
-						int		len);
+	void setAnimation(char *name);
+	void addAnimation(	char	*name,
+						int		 time,
+						char	*sprites[],
+						int		 len);
 	void callback(function<void ()> f);
 
 private:
 
 	struct animPack
 	{
-		string	name;
-		int		time;
+		char	*name;
+		int		 time;
 		vector<SDL_Surface*> surfaces;
 	};
 

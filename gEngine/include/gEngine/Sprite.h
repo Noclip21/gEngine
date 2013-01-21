@@ -21,14 +21,14 @@ public:
 	static vector<Sprite*> objects;
 
 
-	Sprite( string	 src,
-			Surface *parent,
-			double	 posx,
-			double	 posy);
+	Sprite( char	*src =		NULL,
+			Surface *parent =	NULL,
+			double	 posx =		0,
+			double	 posy =		0);
 	virtual ~Sprite();
 
 	
-	SDL_Surface* loadBmp(string src);
+	SDL_Surface* loadBmp(char *src);
 
 private:
 

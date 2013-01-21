@@ -60,31 +60,29 @@ Animation::~Animation()
 
 
 
-void Animation::setAnimation(string name)
+void Animation::setAnimation(char *name)
 {
 	for(size_t i=0; i<_animations.size(); ++i)
-		if(name.compare(_animations[i]->name) == 0)
+		if(string(name).compare(_animations[i]->name) == 0)
 		{
 			_frame = 0;
 			_currentAnim = _animations[i];
 		}
 }
 
-void Animation::addAnimation(string	name,
-							 int	time,
-							 string	sprites,
-							 int	len)
+void Animation::addAnimation(char	*name,
+							 int	 time,
+							 char	*sprites[],
+							 int	 len)
 {
-	if(	name.size() > 0 &&
-		time > 0		&&
-		len > 0)
+	if(	!string(name).empty() && time > 0 && len > 0)
 	{
 		animPack *anim = new animPack;
 		anim->name = name;
 		anim->time = time;
 		for(int i=0; i<len; ++i)
 		{
-			SDL_Surface *temp = loadBmp(sprites);
+			SDL_Surface *temp = loadBmp(sprites[i]);
 			if(temp) anim->surfaces.push_back(temp);
 		}
 		_animations.push_back(anim);
@@ -103,7 +101,7 @@ void Animation::Animation_display()
 {
 	if(_currentAnim)
 	{
-		if(SDL_GetTicks() - _timer >= _currentAnim->time)
+		if((SDL_GetTicks() - _timer) >= _currentAnim->time)
 		{
 			_timer = SDL_GetTicks();
 
