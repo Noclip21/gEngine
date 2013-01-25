@@ -1,5 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
+#define PI 3.14159265
 
 #include <vector>
 #include <iostream>

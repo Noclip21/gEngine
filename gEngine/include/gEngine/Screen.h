@@ -5,6 +5,7 @@
 
 #include "Utils.h"
 #include "Surface.h"
+#include "Sprite.h"
 #include "Camera.h"
 
 
@@ -30,8 +31,8 @@ public:
 			int		 height);
 
 	~Screen();
-
-	void blint(Surface *Surface);
+	
+	void blint(Sprite *sprite);
 	void render(Surface *surface);
 
 private:

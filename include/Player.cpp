@@ -16,7 +16,7 @@ Player::Player(Surface *parent,double posx,double posy) : Animation(parent,posx,
 		"logoi128.bmp"
 	};
 
-	addAnimation("car",250,amin,2);
+	addAnimation("blink",100,amin,2);
 
 	addListener([this](){Player_display();});
 }
@@ -27,12 +27,12 @@ Player::~Player()
 
 void Player::Player_display()
 {
-	/*if(Utils::dist(pos(),qdist) > 100)
+	if(Utils::dist(pos(),qdist) > 100)
 	{
 		qdist.first =	x;
 		qdist.second =	y;
 		new Trail(this);
-	}*/
+	}
 
 
 	if(Event::keyDown(SDLK_a) || Event::keyDown(SDLK_d))

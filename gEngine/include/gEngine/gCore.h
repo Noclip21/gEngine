@@ -1,7 +1,6 @@
 #ifndef DLL2_H
 #define DLL2_H
 
-
 #include "Utils.h"
 #include "Object.h"
 #include "Event.h"

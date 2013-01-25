@@ -5,18 +5,38 @@ World::World(Surface *parent) : Screen(parent,0,0,Main::width(),Main::height())
 {
 	Resource::cache("../res/res.wad");
 
-	Surface *Wscr = new Surface(this,0,0);
-	//Surface *Wplr = new Surface(screen,0,0);
-
-	new Sprite("write256.bmp",Wscr);
-	player = new Player(Wscr,0,0);
-	screen = new Screen(Wscr,0,0,Main::width()/2,Main::height()/2);
-	screen->origin(Main::width()/4,Main::height()/4);
-
-	cam(Wscr,screen);
-	//screen->cam(Wplr,player);
-
-	addListener([this](){World_display();});
+	srand(time(NULL));
+	for(size_t i=0; i<20; ++i)
+	{
+		Sprite *obj = new Sprite("dummy64.bmp",Main::root());
+				obj->x = rand()%Main::width();
+				obj->y = rand()%Main::height();
+				obj->avelx = (rand()%60)/10.0f - 3; 
+				obj->addListener([obj]()
+				{
+					obj->avely += 1;
+					if(obj->x + obj->avelx > Main::width())
+					{
+						obj->avelx *= -1;
+						obj->x = Main::width();
+					}
+					if(obj->x + obj->avelx < 0)
+					{
+						obj->avelx *= -1;
+						obj->x = 0;
+					}
+					if(obj->y + obj->avely > Main::height())
+					{
+						obj->avely *= -1;
+						obj->y = Main::height();
+					}
+					if(obj->y + obj->avely < 0)
+					{
+						obj->avely *= -0.999;
+						obj->y = 0;
+					}
+				});
+	}
 }
 World::~World()
 {
@@ -27,14 +47,6 @@ World::~World()
 
 void World::World_display()
 {
-	if(Event::keyDown(SDLK_TAB))
-	{
-		if(cam()->target() == player)
-			cam()->target(screen);
-		else
-			cam()->target(player);
-	}
-
 	if(Event::keyDown(SDLK_ESCAPE))
 		Main::RUNNING = false;
 }

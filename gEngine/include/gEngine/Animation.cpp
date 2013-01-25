@@ -31,7 +31,7 @@ void Animation::stop()
 int Animation::numFrames()
 {
 	if(_currentAnim)
-		return _currentAnim->surfaces.size();
+		return _currentAnim->ids.size();
 	else
 		return 0;
 }
@@ -82,8 +82,8 @@ void Animation::addAnimation(char	*name,
 		anim->time = time;
 		for(int i=0; i<len; ++i)
 		{
-			SDL_Surface *temp = loadBmp(sprites[i]);
-			if(temp) anim->surfaces.push_back(temp);
+			GLuint id = newTexture(sprites[i]);
+			if(id) anim->ids.push_back(id);
 		}
 		_animations.push_back(anim);
 
@@ -107,10 +107,10 @@ void Animation::Animation_display()
 
 			if(!_pause) _frame++;
 
-			if(_frame >= 0 && _frame <= _currentAnim->surfaces.size())
+			if(_frame >= 0 && _frame <= numFrames())
 			{
-				setSurface(_currentAnim->surfaces[_frame-1]);
-				if(_frame == _currentAnim->surfaces.size())
+				setTexture(_currentAnim->ids[_frame-1]);
+				if(_frame == numFrames())
 					_callback();
 			}else
 				_frame = 0;

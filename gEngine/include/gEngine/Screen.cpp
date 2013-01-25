@@ -1,7 +1,6 @@
 #include "Screen.h"
 
 
-
 vector<Screen*> Screen::objects;
 
 
@@ -40,7 +39,8 @@ Screen::Screen(	Surface *parent,
 {
 	objects.push_back(this);
 	
-	setSurface(SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA,width,height,32,NULL,NULL,NULL,NULL));
+	_width =	width;
+	_height =	height;
 
 	_cam = NULL;
 
@@ -55,17 +55,37 @@ Screen::~Screen()
 
 
 
-void Screen::blint(Surface *surface)
+void Screen::blint(Sprite *sprite)
 {
-	if(alive(surface) && getSurface())
-		if(surface->getSurface())
+	if(alive(sprite))
+	{
+		glBindTexture(GL_TEXTURE_2D,sprite->id());
 		{
-			SDL_Rect r;
-				r.x = (Uint16)(surface->globalX() - surface->globalOriginX() - globalX());
-				r.y = (Uint16)(surface->globalY() - surface->globalOriginY() - globalY());
+			double Gx =			sprite->globalX();
+			double Gy =			sprite->globalY();
+			double Gox =		sprite->globalOriginX()*sprite->scaleX;
+			double Goy =		sprite->globalOriginY()*sprite->scaleY;
+			double Grotation =	sprite->globalRotation();
+			double Swidth =		sprite->width()*sprite->scaleX;
+			double Sheight =	sprite->height()*sprite->scaleY;
+			
+			double sn = sin(Grotation*PI/180);
+			double cn = cos(Grotation*PI/180);
 
-			SDL_BlitSurface(surface->getSurface(),NULL,getSurface(),&r);
+			double	qx = -cn*Gox+sn*Goy,				qxw = cn*(Swidth-Gox)+sn*Goy,
+					qy = -sn*Gox-cn*Goy,				qyw = sn*(Swidth-Gox)-cn*Goy,
+
+					qxh = -cn*Gox-sn*(Sheight-Goy),		qxwh = cn*(Swidth-Gox)-sn*(Sheight-Goy),
+					qyh = -sn*Gox+cn*(Sheight-Goy),		qywh = sn*(Swidth-Gox)+cn*(Sheight-Goy);
+			
+			glBegin(GL_QUADS);
+				glTexCoord2f(0,0);	glVertex3f(Gx+qx,	Gy+qy,0);
+				glTexCoord2f(1,0);	glVertex3f(Gx+qxw,	Gy+qyw,0);
+				glTexCoord2f(1,1);	glVertex3f(Gx+qxwh,	Gy+qywh,0);
+				glTexCoord2f(0,1);	glVertex3f(Gx+qxh,	Gy+qyh,0);
+			glEnd();
 		}
+	}
 }
 
 void Screen::render(Surface* surface)
@@ -73,18 +93,15 @@ void Screen::render(Surface* surface)
 	if(alive(surface))
 		for(size_t i=0; i<surface->children.size(); ++i)
 		{
-			blint(surface->children[i]);
-			if(!dynamic_cast<Screen*>(surface->children[i]))
-				render(surface->children[i]);
+			render(surface->children[i]);
+			if(dynamic_cast<Sprite*>(surface->children[i]))
+				blint((Sprite*)surface->children[i]);
 		}
 }
 
+
+
 void Screen::Screen_display()
 {
-	if(getSurface())
-	{
-		SDL_FillRect(getSurface(),NULL,SDL_MapRGBA(getSurface()->format,0,0,0,255));
-		render(this);
-		SDL_Flip(getSurface());
-	}
+	render(this);
 }

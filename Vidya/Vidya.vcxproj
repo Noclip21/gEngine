@@ -70,14 +70,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\include\Player.cpp" />
-    <ClCompile Include="..\include\Trail.cpp" />
     <ClCompile Include="..\include\vidya.cpp" />
     <ClCompile Include="..\include\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Player.h" />
-    <ClInclude Include="..\include\Trail.h" />
     <ClInclude Include="..\include\World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

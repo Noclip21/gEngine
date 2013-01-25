@@ -1,8 +1,12 @@
 #include "Sprite.h"
-
-
+#include <iostream>
+using namespace std;
 
 vector<Sprite*> Sprite::objects;
+
+
+GLuint Sprite::id(){ return _id; }
+
 
 
 Sprite::Sprite( char	 *src,
@@ -12,13 +16,14 @@ Sprite::Sprite( char	 *src,
 {
 	objects.push_back(this);
 
-	if(src) setSurface(loadBmp(src));
+	if(src) setTexture(src);
 	
 	addListener([this](){Sprite_display();});
 }
 
 Sprite::~Sprite()
 {
+	if(_id) deleteTexture();
 	Utils::removeObject(*this,objects);
 }
 
@@ -34,7 +39,6 @@ SDL_Surface* Sprite::loadBmp(char *src)
 	SDL_Surface *temp = SDL_LoadBMP_RW(data,0);
 	if(!temp) return NULL;
 	
-
 	SDL_LockSurface(temp);
 
 	Uint8 keyRed8	= temp->format->palette->colors[255].r;
@@ -57,7 +61,7 @@ SDL_Surface* Sprite::loadBmp(char *src)
 	{
 		case SPRITE_OPAQUE:
 		{
-			SDL_Surface *formated = SDL_DisplayFormat(temp);
+			SDL_Surface *formated = SDL_DisplayFormatAlpha(temp);
 			SDL_FreeSurface(temp);
 			return formated;
 		}
@@ -65,7 +69,7 @@ SDL_Surface* Sprite::loadBmp(char *src)
 		case SPRITE_TRANSC:
 		{
 			SDL_SetColorKey(temp,SDL_SRCCOLORKEY|SDL_RLEACCEL,SDL_MapRGB(temp->format,keyRed8,keyGreen8,keyBlue8));
-			SDL_Surface *formated = SDL_DisplayFormat(temp);
+			SDL_Surface *formated = SDL_DisplayFormatAlpha(temp);
 			SDL_FreeSurface(temp);
 			return formated;
 		}
@@ -110,6 +114,83 @@ SDL_Surface* Sprite::loadBmp(char *src)
 		default:
 			return NULL;
 	}
+}
+
+GLuint Sprite::newTexture(SDL_Surface *surface)
+{
+	if(!surface) return NULL;
+
+	Uint8 bpp = surface->format->BytesPerPixel;
+	GLenum format;
+	if(bpp == 4)
+		if(surface->format->Rmask == 0x000000ff) format = GL_RGBA;
+		else									 format = GL_BGRA_EXT;
+	if(bpp == 3)
+		if(surface->format->Rmask == 0x000000ff) format = GL_RGB;
+		else									 format = GL_BGR_EXT;
+
+	GLuint id = 0;
+	glGenTextures(1,&id);
+
+	glBindTexture(GL_TEXTURE_2D,id);
+	{
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+ 
+		glTexImage2D( GL_TEXTURE_2D,0,bpp,surface->w,surface->h, 0,
+							format,GL_UNSIGNED_BYTE,surface->pixels);
+	}
+	
+	return id;
+}
+
+GLuint Sprite::newTexture(char *src)
+{
+	SDL_Surface *surface = loadBmp(src);
+	
+	if(!surface) return NULL;
+	
+	return newTexture(surface);
+}
+
+
+
+void Sprite::deleteBmp(SDL_Surface **surface)
+{
+	SDL_FreeSurface(*surface);
+}
+
+void Sprite::deleteTexture(GLuint &id)
+{
+	glDeleteTextures(1,&id);
+}
+
+void Sprite::deleteTexture()
+{
+	if(_id) deleteTexture(_id);
+}
+
+
+
+void Sprite::setTexture(GLuint id)
+{
+	_id = id;
+
+	glBindTexture(GL_TEXTURE_2D,_id);
+	{
+		glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH,&_width);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH,&_height);
+	}
+}
+
+void Sprite::setTexture(SDL_Surface *surface)
+{
+	setTexture(newTexture(surface));
+}
+
+void Sprite::setTexture(char *src)
+{
+	setTexture(newTexture(src));	
 }
 
 

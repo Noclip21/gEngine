@@ -46,7 +46,7 @@ private:
 	{
 		char	*name;
 		int		 time;
-		vector<SDL_Surface*> surfaces;
+		vector<GLuint> ids;
 	};
 
 	vector<animPack*>	 _animations;

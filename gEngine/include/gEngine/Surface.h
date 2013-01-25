@@ -3,6 +3,9 @@
 
 #include <vector>
 
+#include <Windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
 #include <SDL.h>
 
 #include "Utils.h"
@@ -24,8 +27,11 @@ public:
 	double avely;
 	double ox;
 	double oy;
+	double scaleX;
+	double scaleY;
+	double rotation;
 	
-
+	
 	pair<double,double>	pos();
 	pair<double,double>	oldPos();
 	double				oldx();
@@ -36,17 +42,22 @@ public:
 	double				globalY();
 	double				globalOriginX();
 	double				globalOriginY();
-	SDL_Surface*		getSurface();
+	double				globalRotation();
 	int					depth();
 	Surface*			parent();
 	int					width();
 	int					height();
+	pair<double,double> scale();
+
+	int					mouseX();
+	int					mouseY();
+	pair<double,double> mouse();
 	
 	void pos		(double posx,double posy);
 	void avel		(double ax,double ay);
 	void origin		(double posx,double posy);
-	void setSurface (SDL_Surface *surface);
 	void parent		(Surface *parent);
+	void scale		(double sx,double sy);
 
 
 	Surface(Surface *parent =	NULL,
@@ -58,14 +69,19 @@ public:
 	void swapDepths		(int surfaceId1,int surfaceId2);
 	void addChild		(Surface *child);
 	void removeChild	(Surface *child);
-	virtual void blint	(Surface *surface);
+
+
+protected:
+
+	int _width;
+	int _height;
+
 
 private:
 
 	int _depth;
-
-	SDL_Surface	*_surface;
-	Surface		*_parent;
+	
+	Surface	*_parent;
 
 	double _oldx;
 	double _oldy;

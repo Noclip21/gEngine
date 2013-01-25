@@ -56,13 +56,50 @@ bool Main::init()
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		return false;
 
-	int flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
+
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
+	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,8);
+ 
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,16);
+	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,32);
+ 
+	SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,8);
+	SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,8);
+	SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,8);
+	SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,8);
+ 
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,1);
+ 
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,2);
+
+
+	int flags = SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL;
 	if(!_frame) flags = flags | SDL_NOFRAME;
 	SDL_Surface *surface;
     if((surface = SDL_SetVideoMode(_w,_h,32,flags)) == NULL)
 		return false;
-	else
-		_root->setSurface(surface);
+
+
+	glClearColor(0,0,0,0);
+	glClearDepth(1.0f);
+ 
+	glViewport(0,0,_w,_h);
+ 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+ 
+	glOrtho(0,_w,_h,0,1,-1);
+ 
+	glMatrixMode(GL_MODELVIEW);
+ 
+	glEnable(GL_TEXTURE_2D);
+	glLoadIdentity();
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
 
 	SDL_WM_SetCaption(_appName,_appName);
 
@@ -93,9 +130,13 @@ int Main::display()
 			lastTime =		SDL_GetTicks();
 			frames++;
 
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glLoadIdentity();
 
 			for(size_t i=0; i<Object::objects.size(); ++i)
 				if(Object::objects[i]) Object::objects[i]->display();
+
+			SDL_GL_SwapBuffers();
 		}
 	}
 

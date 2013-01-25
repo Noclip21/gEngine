@@ -3,6 +3,9 @@
 
 #include <vector>
 
+#include <Windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
 #include <SDL.h>
 
 #include "Utils.h"
@@ -20,6 +23,9 @@ public:
 	
 	static vector<Sprite*> objects;
 
+	
+	GLuint id();
+
 
 	Sprite( char	*src =		NULL,
 			Surface *parent =	NULL,
@@ -28,9 +34,21 @@ public:
 	virtual ~Sprite();
 
 	
-	SDL_Surface* loadBmp(char *src);
+	static SDL_Surface* loadBmp	(char *src);
+	static GLuint newTexture	(SDL_Surface *surface);
+	static GLuint newTexture	(char *src);
+
+	static void deleteBmp		(SDL_Surface **surface);
+	static void deleteTexture	(GLuint &id);
+	void deleteTexture			();
+	
+	void setTexture(GLuint id);
+	void setTexture(SDL_Surface *surface);
+	void setTexture(char *src);
 
 private:
+
+	GLuint _id;
 
 	void Sprite_display();
 };
