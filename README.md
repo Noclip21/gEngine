@@ -69,9 +69,9 @@ int main(int argc,char *argv[])
 - Get the .dlls and .libs from *gEngine/lib/*
 - Get the .hs from *gEngine/include/sdl/*
 
-Projects included (Visual studio 2012)
+Projects included (Visual Studio 2012)
 - Engine development: *gEngine/gEngine.sln*
-- Example: Vidya.sln
+- Example: *Vidya.sln*
 
 --
 This work is free. You can redistribute it and/or modify it under the
