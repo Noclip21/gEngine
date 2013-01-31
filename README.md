@@ -1,10 +1,16 @@
 gEngine
+=======
 
-2D game engine written in c++
+
+##About
+gEngine is a 2D game engine written in c++.
+
+Developed by myself for practice and study purposes at Federal University of Ceara.
 
 
-Example
+##Example
 
+```C++
 #include <gCore.h>
 
 int main(int argc,char *argv[])
@@ -39,33 +45,35 @@ int main(int argc,char *argv[])
 
 	retun 0;
 }
+```
 
 
-Developed by myself for practice and study purposes at Federal University of Ceara.
+##Instalation
+
+###Binaries
+- Get the .dlls and .libs from *gEngine/lib/*
+- get the .hs from *gEngine/include/*
+
+###Source
+- Get the .hs amd .cpps from *gEngine/include/gEngine/*
 
 
-Instalation
+**Compiling needs additional libraries**
 
-Build
-> Get the .dlls and .libs from gEngine/lib/
-> get the .hs from gEngine/include/
 
-Source
-> Get the .hs amd .cpps from gEngine/include/gEngine/
+####HLLib
+- Get the .dlls and .libs from *gEngine/lib/*
+- Get the .hs from *gEngine/include/hllib/*
 
-Compiling needs additional libraries
-> HLLib
-- Get the .dlls and .libs from gEngine/lib/
-- Get the .hs from gEngine/include/hllib/
-> SDL
-- Get the .dlls and .libs from gEngine/lib/
-- Get the .hs from gEngine/include/sdl/
+####SDL
+- Get the .dlls and .libs from *gEngine/lib/*
+- Get the .hs from *gEngine/include/sdl/*
 
 Projects included (Visual studio 2012)
-> Engine development: gEngine/gEngine.sln
-> Example: Vidya.sln
+- Engine development: *gEngine/gEngine.sln*
+- Example: Vidya.sln
 
-
+--
 This work is free. You can redistribute it and/or modify it under the
 terms of the Do What The Fuck You Want To Public License, Version 2,
 as published by Sam Hocevar. See the COPYING file for more details.
