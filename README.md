@@ -61,11 +61,11 @@ int main(int argc,char *argv[])
 **Compiling needs additional libraries**
 
 
-####HLLib
+####[HLLib](http://nemesis.thewavelength.net/index.php?p=35)
 - Get the .dlls and .libs from *gEngine/lib/*
 - Get the .hs from *gEngine/include/hllib/*
 
-####SDL
+####[SDL](http://www.libsdl.org/)
 - Get the .dlls and .libs from *gEngine/lib/*
 - Get the .hs from *gEngine/include/sdl/*
 
