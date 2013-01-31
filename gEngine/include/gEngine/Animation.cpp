@@ -1,5 +1,5 @@
 #include "Animation.h"
-
+using namespace utils;
 
 
 vector<Animation*> Animation::objects;
@@ -55,7 +55,7 @@ Animation::Animation(	Surface *parent,
 
 Animation::~Animation()
 {
-	Utils::removeObject(*this,objects);
+	removeObject(*this,objects);
 }
 
 

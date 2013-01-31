@@ -1,4 +1,5 @@
 #include "Resource.h"
+using namespace utils;
 
 
 
@@ -17,7 +18,7 @@ bool Resource::cache(string file)
 		hlInitialized = true;
 	}
 	
-	// if(Utils::findObject(packages
+	// if(findObject(packages
 	hlUInt  package = 0;
 	if(!hlCreatePackage(hlGetPackageTypeFromName(file.c_str()),&package)) return false;
 	hlBindPackage(package);
@@ -74,13 +75,13 @@ void Resource::dump(string package)
 				delete packages[i]->files[0];
 					   packages[i]->files[0] = NULL;
 
-				Utils::removeObject(packages[i]->files[0],packages[i]->files);
+				removeObject(packages[i]->files[0],packages[i]->files);
 			}
 
 			delete	packages[i];
 					packages[i] = NULL;
 			
-			Utils::removeObject(packages[i],packages);
+			removeObject(packages[i],packages);
 
 			break;
 		}

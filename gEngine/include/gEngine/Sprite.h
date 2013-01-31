@@ -23,7 +23,8 @@ public:
 	
 	static vector<Sprite*> objects;
 
-	
+	bool visible;
+
 	GLuint id();
 
 

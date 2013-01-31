@@ -1,32 +1,21 @@
 #include "Event.h"
 #include <Windows.h>
+using namespace utils;
 
 
 
 vector<SDLKey>	Event::keys;
-pair<int,int>	Event::mousePos;
+vector2			Event::mouse;
 
 
 bool Event::keyDown(int key)
 {
 	SDLKey keyObj = (SDLKey)key;
-	return (Utils::findObject(keyObj,keys) >= 0);
-}
-int Event::mouseX()
-{
-	return mousePos.first;
-}
-int Event::mouseY()
-{
-	return mousePos.second;
+	return (findObject(keyObj,keys) >= 0);
 }
 
 
 
-void Event::all()
-{
-	cout << mousePos.first << "  " << mousePos.second << endl;
-}
 Event::Event()
 {
 	addListener([this](){Event_display();});
@@ -51,21 +40,21 @@ void Event::Event_display()
 			// key
 				case(SDL_KEYDOWN):
 				{
-					if(Utils::findObject(e.key.keysym.sym,keys) < 0)
+					if(findObject(e.key.keysym.sym,keys) < 0)
 						keys.push_back(e.key.keysym.sym);
 					break;
 				}
 				case(SDL_KEYUP):
 				{
-					Utils::removeObject(e.key.keysym.sym,keys);
+					removeObject(e.key.keysym.sym,keys);
 					break;
 				}
 
 			// mouse
 				case(SDL_MOUSEMOTION):
 				{
-					mousePos.first = e.motion.x;
-					mousePos.second = e.motion.y;
+					mouse.x = e.motion.x;
+					mouse.y = e.motion.y;
 					break;
 				}
 		}

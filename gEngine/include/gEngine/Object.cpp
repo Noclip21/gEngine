@@ -1,4 +1,5 @@
 #include "Object.h"
+using namespace utils;
 
 
 
@@ -6,7 +7,7 @@ vector<Object*> Object::objects;
 
 bool Object::alive(Object *obj)
 {
-	if(Utils::findObject(*obj,objects) >= 0) return true;
+	if(findObject(*obj,objects) >= 0) return true;
 	else									 return false;
 }
 
@@ -20,7 +21,7 @@ Object::Object()
 
 Object::~Object()
 {
-	Utils::removeObject(*this,objects);
+	removeObject(*this,objects);
 }
 
 

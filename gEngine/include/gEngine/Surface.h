@@ -11,6 +11,8 @@
 #include "Utils.h"
 #include "Object.h"
 
+using namespace utils;
+
 
 #include "prologue.h"
 class G_DECLSPEC Surface : public Object
@@ -21,43 +23,30 @@ public:
 
 	vector<Surface*> children;
 	
-	double x;
-	double y;
-	double avelx;
-	double avely;
-	double ox;
-	double oy;
-	double scaleX;
-	double scaleY;
+	vector2 pos;
+	vector2 avel;
+	vector2 origin;
+	vector2 scale;
 	double rotation;
+	double avelrot;
 	
 	
-	pair<double,double>	pos();
-	pair<double,double>	oldPos();
-	double				oldx();
-	double				oldy();
-	pair<double,double>	avel();
-	pair<double,double> origin();
-	double				globalX();
-	double				globalY();
-	double				globalOriginX();
-	double				globalOriginY();
-	double				globalRotation();
-	int					depth();
-	Surface*			parent();
-	int					width();
-	int					height();
-	pair<double,double> scale();
-
-	int					mouseX();
-	int					mouseY();
-	pair<double,double> mouse();
+	vector2 globalPos();
+	vector2 globalOrigin();
+	double	globalRotation();
+	vector2 mouse();
+	vector2	oldPos();
+	double	oldrot();
+	int		depth();
+	Surface*parent();
+	int		width();
+	int		height();
 	
-	void pos		(double posx,double posy);
-	void avel		(double ax,double ay);
-	void origin		(double posx,double posy);
+	void pos2d		(double posx,double posy);
+	void avel2d		(double ax,double ay);
+	void origin2d	(double posx,double posy);
+	void scale2d	(double sx,double sy);
 	void parent		(Surface *parent);
-	void scale		(double sx,double sy);
 
 
 	Surface(Surface *parent =	NULL,
@@ -83,8 +72,8 @@ private:
 	
 	Surface	*_parent;
 
-	double _oldx;
-	double _oldy;
+	vector2 _oldpos;
+	double _oldrot;
 
 	void Surface_display();
 };

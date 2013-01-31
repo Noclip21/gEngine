@@ -1,39 +1,45 @@
 #include "World.h"
-
+#include <iostream>
+using namespace std;
 
 World::World(Surface *parent) : Screen(parent,0,0,Main::width(),Main::height())
 {
 	Resource::cache("../res/res.wad");
 
 	srand(time(NULL));
-	for(size_t i=0; i<20; ++i)
+	for(size_t i=0; i<60; ++i)
 	{
-		Sprite *obj = new Sprite("dummy64.bmp",Main::root());
-				obj->x = rand()%Main::width();
-				obj->y = rand()%Main::height();
-				obj->avelx = (rand()%60)/10.0f - 3; 
+		Sprite *obj = new Sprite("dummy32.bmp",Main::root());
+				obj->origin2d(16,16);
+				obj->pos.x = rand()%Main::width();
+				obj->pos.y = rand()%Main::height();
+				obj->avel.x = (rand()%60)/10.0f - 3; 
 				obj->addListener([obj]()
 				{
-					obj->avely += 1;
-					if(obj->x + obj->avelx > Main::width())
+					if(obj->pos.x + obj->avel.x > Main::width())	// Right
 					{
-						obj->avelx *= -1;
-						obj->x = Main::width();
+						obj->avel.x *=	-1;
+						obj->pos.x =	Main::width();
+						obj->avelrot =	obj->avel.y;
 					}
-					if(obj->x + obj->avelx < 0)
+					if(obj->pos.x + obj->avel.x < 0)				// Left
 					{
-						obj->avelx *= -1;
-						obj->x = 0;
+						obj->avel.x *=	-1;
+						obj->pos.x =	0;
+						obj->avelrot =	-obj->avel.y;
 					}
-					if(obj->y + obj->avely > Main::height())
+					if(obj->pos.y + obj->avel.y > Main::height())	// Botton
 					{
-						obj->avely *= -1;
-						obj->y = Main::height();
-					}
-					if(obj->y + obj->avely < 0)
+						obj->avel.y *=	-1;
+						obj->pos.y =	Main::height();
+						obj->avelrot =	obj->avel.x;
+					}else
+						obj->avel.y += 1;
+					if(obj->pos.y + obj->avel.y < 0)				// Top
 					{
-						obj->avely *= -0.999;
-						obj->y = 0;
+						obj->avel.y *=	-1;
+						obj->pos.y =		0;
+						obj->avelrot =	-obj->avel.x;
 					}
 				});
 	}

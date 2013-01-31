@@ -8,17 +8,18 @@
 #include "Utils.h"
 
 using namespace std;
+using namespace utils;
 
 
 #include "prologue.h"
 class G_DECLSPEC Event : public Object
 {
 public:
+	
+	static vector2 mouse;
 
 	static bool keyDown(int key);
 
-	static int mouseX();
-	static int mouseY();
 
 	/*bool MouseButtonDown();
 	bool MouseButtonUp();
@@ -28,12 +29,9 @@ public:
 	Event();
 	~Event();
 
-	static void all();
-
 private:
 
 	static vector<SDLKey>	keys;
-	static pair<int,int>	mousePos;
 
 	void Event_display();
 };

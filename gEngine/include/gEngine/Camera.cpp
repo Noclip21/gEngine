@@ -7,11 +7,10 @@ vector<Camera*> Camera::objects;
 
 Surface* Camera::target()				{ return _target;	}
 void	 Camera::target(Surface *target){ _target = target; }
-void	Camera::target(double posx,double posy)
+void	 Camera::target(vector2 pos)
 {
-	_target = NULL;
-	_x = posx;
-	_y = posy;
+	_target =	NULL;
+	_pos =		pos;
 }
 
 
@@ -24,10 +23,8 @@ Camera::Camera(int screenWidth,
 
 	delay = 0.1f;
 
-	_width =	screenWidth;
-	_height =	screenHeight;
-	_wrapper =	wrapper;
-	_x = _y =	0;
+	_offset = vector2(screenWidth/2,screenHeight/2);
+	_wrapper = wrapper;
 
 	addListener([this](){Camera_display();});
 }
@@ -36,7 +33,7 @@ Camera::~Camera()
 {
 	_wrapper =	NULL;
 	_target =	NULL;
-	Utils::removeObject(*this,objects);
+	removeObject(*this,objects);
 }
 
 
@@ -45,17 +42,10 @@ void Camera::Camera_display()
 {
 	if(alive(_wrapper))
 	{
-		double x,y;
-		if(alive(_target))
-		{
-			_x = x = _target->x;
-			_y = y = _target->y;
-		}else{
-			x = _x;
-			y = _y;
-		}
+		vector2 pos;
+		if(alive(_target))	pos = _target->pos;
+		else				pos = _pos;
 
-		_wrapper->avelx = (_width/2 - x - _wrapper->x)*delay;
-		_wrapper->avely = (_height/2 - y - _wrapper->y)*delay;
+		_wrapper->avel = (_offset - pos - _wrapper->pos)*delay;
 	}
 }

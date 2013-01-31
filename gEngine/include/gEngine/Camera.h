@@ -7,6 +7,8 @@
 #include "Object.h"
 #include "Surface.h"
 
+using namespace utils;
+
 
 #include "prologue.h"
 class G_DECLSPEC Camera : public Object
@@ -21,7 +23,7 @@ public:
 	
 	Surface* target();
 	void	 target(Surface *target);
-	void	 target(double posx,double posy);
+	void	 target(vector2 pos);
 
 	
 	Camera(	int		 screenWidth,
@@ -31,12 +33,10 @@ public:
 
 private:
 
-	int		 _width;
-	int		 _height;
 	Surface	*_wrapper;
 	Surface *_target;
-	double	 _x;
-	double	 _y;
+	vector2 _offset;
+	vector2	_pos;
 
 	void Camera_display();
 };

@@ -1,6 +1,7 @@
 #include "Sprite.h"
-#include <iostream>
-using namespace std;
+using namespace utils;
+
+
 
 vector<Sprite*> Sprite::objects;
 
@@ -17,6 +18,8 @@ Sprite::Sprite( char	 *src,
 	objects.push_back(this);
 
 	if(src) setTexture(src);
+
+	visible = true;
 	
 	addListener([this](){Sprite_display();});
 }
@@ -24,7 +27,7 @@ Sprite::Sprite( char	 *src,
 Sprite::~Sprite()
 {
 	if(_id) deleteTexture();
-	Utils::removeObject(*this,objects);
+	removeObject(*this,objects);
 }
 
 

@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include "Camera.h"
 
+using namespace utils;
+
 
 #include "prologue.h"
 class G_DECLSPEC Screen : public Surface
@@ -20,7 +22,7 @@ public:
 	Camera* cam();
 
 	void cam(Surface *wrapper,Surface *target);
-	void cam(Surface *wrapper,double posx,double posy);
+	void cam(Surface *wrapper,vector2 position);
 	void camDelay(double delay);
 
 

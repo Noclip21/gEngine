@@ -1,6 +1,7 @@
 #include "Screen.h"
 
 
+
 vector<Screen*> Screen::objects;
 
 
@@ -10,23 +11,23 @@ void Screen::cam(Surface *wrapper,Surface *target)
 {
 	if(alive(wrapper) && alive(target))
 	{
-		if(_cam) delete _cam;
+		if(alive(_cam)) _cam->kill();
 		_cam = new Camera(width(),height(),wrapper);
 		_cam->target(target);
 	}
 }
-void Screen::cam(Surface *wrapper,double posx,double posy)
+void Screen::cam(Surface *wrapper,vector2 position)
 {
 	if(alive(wrapper))
 	{
-		if(_cam) delete _cam;
+		if(alive(_cam)) _cam->kill();
 		_cam = new Camera(width(),height(),wrapper);
-		_cam->target(posx,posy);
+		_cam->target(position);
 	}
 }
 void Screen::camDelay(double delay)
 {
-	if(_cam) _cam->delay = delay;
+	if(alive(_cam)) _cam->delay = delay;
 }
 
 
@@ -49,8 +50,8 @@ Screen::Screen(	Surface *parent,
 
 Screen::~Screen()
 {
-	Utils::kill(*_cam);
-	Utils::removeObject(*this,objects);
+	if(_cam)_cam->kill();
+	removeObject(*this,objects);
 }
 
 
@@ -59,31 +60,32 @@ void Screen::blint(Sprite *sprite)
 {
 	if(alive(sprite))
 	{
-		glBindTexture(GL_TEXTURE_2D,sprite->id());
+		if(sprite->visible)
 		{
-			double Gx =			sprite->globalX();
-			double Gy =			sprite->globalY();
-			double Gox =		sprite->globalOriginX()*sprite->scaleX;
-			double Goy =		sprite->globalOriginY()*sprite->scaleY;
-			double Grotation =	sprite->globalRotation();
-			double Swidth =		sprite->width()*sprite->scaleX;
-			double Sheight =	sprite->height()*sprite->scaleY;
-			
-			double sn = sin(Grotation*PI/180);
-			double cn = cos(Grotation*PI/180);
+			glBindTexture(GL_TEXTURE_2D,sprite->id());
+			{
+				vector2 p =			sprite->globalPos();
+				vector2 o =			sprite->globalOrigin();
+				double rot =		sprite->globalRotation();
+				double w =			sprite->width()*sprite->scale.x;
+				double h =			sprite->height()*sprite->scale.y;
+					
+				double sn = sin(rot*PI/180);
+				double cn = cos(rot*PI/180);
+				
+				GLfloat	qx = -cn*o.x+sn*o.y,			qxw = cn*(w-o.x)+sn*o.y,
+						qy = -sn*o.x-cn*o.y,			qyw = sn*(w-o.x)-cn*o.y,
 
-			double	qx = -cn*Gox+sn*Goy,				qxw = cn*(Swidth-Gox)+sn*Goy,
-					qy = -sn*Gox-cn*Goy,				qyw = sn*(Swidth-Gox)-cn*Goy,
-
-					qxh = -cn*Gox-sn*(Sheight-Goy),		qxwh = cn*(Swidth-Gox)-sn*(Sheight-Goy),
-					qyh = -sn*Gox+cn*(Sheight-Goy),		qywh = sn*(Swidth-Gox)+cn*(Sheight-Goy);
-			
-			glBegin(GL_QUADS);
-				glTexCoord2f(0,0);	glVertex3f(Gx+qx,	Gy+qy,0);
-				glTexCoord2f(1,0);	glVertex3f(Gx+qxw,	Gy+qyw,0);
-				glTexCoord2f(1,1);	glVertex3f(Gx+qxwh,	Gy+qywh,0);
-				glTexCoord2f(0,1);	glVertex3f(Gx+qxh,	Gy+qyh,0);
-			glEnd();
+						qxh = -cn*o.x-sn*(h-o.y),		qxwh = cn*(w-o.x)-sn*(h-o.y),
+						qyh = -sn*o.x+cn*(h-o.y),		qywh = sn*(w-o.x)+cn*(h-o.y);
+				
+				glBegin(GL_QUADS);
+					glTexCoord2f(0,0);	glVertex3f(p.x+qx,	p.y+qy,0);
+					glTexCoord2f(1,0);	glVertex3f(p.x+qxw,	p.y+qyw,0);
+					glTexCoord2f(1,1);	glVertex3f(p.x+qxwh,p.y+qywh,0);
+					glTexCoord2f(0,1);	glVertex3f(p.x+qxh,	p.y+qyh,0);
+				glEnd();
+			}
 		}
 	}
 }
