@@ -16,7 +16,7 @@ class G_DECLSPEC Object
 		static vector<Object*> objects;
 
 
-		bool alive(Object *obj);
+		static bool alive(Object *obj);
 
 
 		Object();

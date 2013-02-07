@@ -10,7 +10,6 @@
 
 #include "Utils.h"
 #include "Object.h"
-#include "Screen.h"
 #include "Event.h"
 
 using namespace std;
@@ -27,9 +26,6 @@ public:
 	static int		fps();
 	static double	time();
 	static double	speedFactor();
-
-
-	static Screen* root();
 	
 	static int width();
 	static int height();
@@ -52,11 +48,9 @@ private:
 
 	static double	_TIME;
 	static double	_SPEEDFACTOR;
-
-
+	
 	char			*_appName;
 	bool			_frame;
-	static Screen	*_root;
 
 	static int _w;
 	static int _h;

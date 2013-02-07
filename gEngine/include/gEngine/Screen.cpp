@@ -64,11 +64,15 @@ void Screen::blint(Sprite *sprite)
 		{
 			glBindTexture(GL_TEXTURE_2D,sprite->id());
 			{
-				vector2 p =			sprite->globalPos();
-				vector2 o =			sprite->globalOrigin();
-				double rot =		sprite->globalRotation();
-				double w =			sprite->width()*sprite->scale.x;
-				double h =			sprite->height()*sprite->scale.y;
+				vector2 p =		sprite->globalPos() - globalPos();
+				vector2 o =		sprite->globalOrigin();
+				double rot =	sprite->globalRotation();
+				float r =		sprite->globalRed();
+				float g =		sprite->globalGreen();
+				float b =		sprite->globalBlue();
+				float a =		sprite->globalAlpha();
+				double w =		sprite->width()*sprite->scale.x;
+				double h =		sprite->height()*sprite->scale.y;
 					
 				double sn = sin(rot*PI/180);
 				double cn = cos(rot*PI/180);
@@ -79,7 +83,12 @@ void Screen::blint(Sprite *sprite)
 						qxh = -cn*o.x-sn*(h-o.y),		qxwh = cn*(w-o.x)-sn*(h-o.y),
 						qyh = -sn*o.x+cn*(h-o.y),		qywh = sn*(w-o.x)+cn*(h-o.y);
 				
+				
+				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
+
 				glBegin(GL_QUADS);
+					glColor4f(r,g,b,a);
 					glTexCoord2f(0,0);	glVertex3f(p.x+qx,	p.y+qy,0);
 					glTexCoord2f(1,0);	glVertex3f(p.x+qxw,	p.y+qyw,0);
 					glTexCoord2f(1,1);	glVertex3f(p.x+qxwh,p.y+qywh,0);
@@ -95,9 +104,12 @@ void Screen::render(Surface* surface)
 	if(alive(surface))
 		for(size_t i=0; i<surface->children.size(); ++i)
 		{
-			render(surface->children[i]);
-			if(dynamic_cast<Sprite*>(surface->children[i]))
-				blint((Sprite*)surface->children[i]);
+			if(!dynamic_cast<Screen*>(surface->children[i]))
+			{
+				if(dynamic_cast<Sprite*>(surface->children[i]))
+					blint((Sprite*)surface->children[i]);
+				render(surface->children[i]);
+			}
 		}
 }
 
@@ -105,5 +117,14 @@ void Screen::render(Surface* surface)
 
 void Screen::Screen_display()
 {
+	glViewport(	globalPos().x,
+				Main::height()-_height-globalPos().y,
+				_width,
+				_height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0,_width,_height,0,1,-1);
+
 	render(this);
 }

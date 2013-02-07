@@ -8,6 +8,7 @@
 #include <gl/GLU.h>
 #include <SDL.h>
 
+#include "Main.h"
 #include "Utils.h"
 #include "Object.h"
 
@@ -29,11 +30,20 @@ public:
 	vector2 scale;
 	double rotation;
 	double avelrot;
+
+	float red;
+	float green;
+	float blue;
+	float alpha;
 	
 	
 	vector2 globalPos();
 	vector2 globalOrigin();
 	double	globalRotation();
+	float	globalRed();
+	float	globalGreen();
+	float	globalBlue();
+	float	globalAlpha();
 	vector2 mouse();
 	vector2	oldPos();
 	double	oldrot();

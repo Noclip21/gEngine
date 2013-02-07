@@ -1,6 +1,6 @@
 #include "Sprite.h"
 using namespace utils;
-
+#include <Windows.h>
 
 
 vector<Sprite*> Sprite::objects;
@@ -36,7 +36,10 @@ SDL_Surface* Sprite::loadBmp(char *src)
 {
 	if(!src) return NULL;
 
-	SDL_RWops *data = Resource::fetch(src);
+	void *mem = 0;
+	int size;
+	Resource::fetch(src,&mem,&size);
+	SDL_RWops *data = SDL_RWFromMem(mem,size*sizeof(char));
 	if(!data) return NULL;
 	
 	SDL_Surface *temp = SDL_LoadBMP_RW(data,0);

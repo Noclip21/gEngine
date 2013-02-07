@@ -16,12 +16,8 @@ int		Main::fps()			{ return _FPS;			}
 double	Main::time()		{ return _TIME;			}
 double	Main::speedFactor() { return _SPEEDFACTOR;	}
 
-
-Screen* Main::_root;
 int Main::_w = 0;
 int Main::_h = 0;
-
-Screen* Main::root(){ return _root; }
 
 int Main::width() { return _w; }
 int Main::height(){ return _h; }
@@ -34,13 +30,12 @@ Main::Main(int	w,
 		   bool frame,
 		   char *appName)
 {
-	_w =	w;
-	_h =	h;
-	_FRAMERATE = framerate;
-	_TIME = 1;
-	_appName =	appName;
-	_frame =	frame;
-	_root =		new Screen(NULL,0,0,w,h);
+	_w =			w;
+	_h =			h;
+	_FRAMERATE =	framerate;
+	_TIME =			1;
+	_appName =		appName;
+	_frame =		frame;
 
 	if(init()) RUNNING = true;
 }
@@ -85,17 +80,17 @@ bool Main::init()
 	glClearColor(0,0,0,0);
 	glClearDepth(1.0f);
  
-	glViewport(0,0,_w,_h);
+	//glViewport(0,0,_w,_h);
  
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
  
-	glOrtho(0,_w,_h,0,1,-1);
+	//glOrtho(0,_w,_h,0,1,-1);
  
-	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_MODELVIEW);
  
 	glEnable(GL_TEXTURE_2D);
-	glLoadIdentity();
+	//glLoadIdentity();
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
@@ -131,7 +126,6 @@ int Main::display()
 			frames++;
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glLoadIdentity();
 
 			for(size_t i=0; i<Object::objects.size(); ++i)
 				if(Object::objects[i]) Object::objects[i]->display();

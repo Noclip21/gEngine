@@ -6,7 +6,12 @@ World::World(Surface *parent) : Screen(parent,0,0,Main::width(),Main::height())
 {
 	Resource::cache("../res/res.wad");
 
-	srand(time(NULL));
+	wrapper = new Surface(this);
+	player = new Player(wrapper,0,0);
+
+	cam(wrapper,player);
+
+	/*srand(time(NULL));
 	for(size_t i=0; i<60; ++i)
 	{
 		Sprite *obj = new Sprite("dummy32.bmp",Main::root());
@@ -42,7 +47,7 @@ World::World(Surface *parent) : Screen(parent,0,0,Main::width(),Main::height())
 						obj->avelrot =	-obj->avel.x;
 					}
 				});
-	}
+	}*/
 }
 World::~World()
 {

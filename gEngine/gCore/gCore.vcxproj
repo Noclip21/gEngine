@@ -40,7 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)lib\</OutDir>
-    <IncludePath>$(SolutionDir)include\sdl;$(SolutionDir)include\hllib;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include\sdl;$(SolutionDir)include\hllib;$(SolutionDir)include\openal;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;HLLib.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;SDLmain.lib;HLLib.lib;opengl32.lib;glu32.lib;OpenAL32.lib;alut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\gEngine\Animation.h" />
+    <ClInclude Include="..\include\gEngine\Audio.h" />
     <ClInclude Include="..\include\gEngine\Camera.h" />
     <ClInclude Include="..\include\gEngine\epilogue.h" />
     <ClInclude Include="..\include\gEngine\Event.h" />
@@ -85,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\include\gEngine\Animation.cpp" />
+    <ClCompile Include="..\include\gEngine\Audio.cpp" />
     <ClCompile Include="..\include\gEngine\Camera.cpp" />
     <ClCompile Include="..\include\gEngine\Event.cpp" />
     <ClCompile Include="..\include\gEngine\Main.cpp" />

@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)gEngine\include\sdl;$(SolutionDir)gEngine\include\hllib;$(SolutionDir)gEngine\include\gEngine;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)gEngine\include\sdl;$(SolutionDir)gEngine\include\hllib;$(SolutionDir)gEngine\include\openal;$(SolutionDir)gEngine\include\gEngine;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)gEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)gEngine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gCore.lib;SDL.lib;SDLmain.lib;HLLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gCore.lib;SDL.lib;SDLmain.lib;HLLib.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -71,10 +71,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\include\vidya.cpp" />
-    <ClCompile Include="..\include\World.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

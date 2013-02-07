@@ -6,10 +6,14 @@
 vector<Surface*> Surface::objects;
 
 
-vector2 Surface::globalPos()		{ return _parent?pos+_parent->globalPos():pos;					}
-vector2 Surface::globalOrigin()		{ return _parent?origin+_parent->globalOrigin():origin;			}
+vector2 Surface::globalPos()		{ return _parent?pos+_parent->globalPos()			:pos;		}
+vector2 Surface::globalOrigin()		{ return _parent?origin+_parent->globalOrigin()		:origin;	}
+double	Surface::globalRotation()	{ return _parent?rotation+_parent->globalRotation()	:rotation;	}
+float	Surface::globalRed()		{ return _parent?red+_parent->globalRed()			:red;		}
+float	Surface::globalGreen()		{ return _parent?green+_parent->globalGreen()		:green;		}
+float	Surface::globalBlue()		{ return _parent?blue+_parent->globalBlue()			:blue;		}
+float	Surface::globalAlpha()		{ return _parent?alpha+_parent->globalAlpha()		:alpha;		}
 vector2 Surface::mouse()			{ return Event::mouse-globalPos();								}
-double	Surface::globalRotation()	{ return _parent?rotation+_parent->globalRotation():rotation;	}
 vector2	Surface::oldPos()			{ return _oldpos;												}
 double	Surface::oldrot()			{ return _oldrot;												}
 int		Surface::depth()			{ return _depth;												}
@@ -47,6 +51,10 @@ Surface::Surface(Surface *parent,
 
 	rotation =	0;
 	avelrot =	0;
+	red =		1;
+	green =		1;
+	blue =		1;
+	alpha =		1;
 	
 	_depth =	-1;
 	_parent =	NULL;

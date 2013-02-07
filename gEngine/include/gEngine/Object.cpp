@@ -8,7 +8,7 @@ vector<Object*> Object::objects;
 bool Object::alive(Object *obj)
 {
 	if(findObject(*obj,objects) >= 0) return true;
-	else									 return false;
+	else							  return false;
 }
 
 
