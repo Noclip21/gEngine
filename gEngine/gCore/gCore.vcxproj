@@ -40,7 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)lib\</OutDir>
-    <IncludePath>$(SolutionDir)include\sdl;$(SolutionDir)include\hllib;$(SolutionDir)include\openal;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include\sdl;$(SolutionDir)include\sdlttf;$(SolutionDir)include\hllib;$(SolutionDir)include\openal;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;HLLib.lib;opengl32.lib;glu32.lib;OpenAL32.lib;alut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_ttf.lib;HLLib.lib;opengl32.lib;glu32.lib;OpenAL32.lib;alut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,6 +82,7 @@
     <ClInclude Include="..\include\gEngine\Screen.h" />
     <ClInclude Include="..\include\gEngine\Sprite.h" />
     <ClInclude Include="..\include\gEngine\Surface.h" />
+    <ClInclude Include="..\include\gEngine\Text.h" />
     <ClInclude Include="..\include\gEngine\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +96,7 @@
     <ClCompile Include="..\include\gEngine\Screen.cpp" />
     <ClCompile Include="..\include\gEngine\Sprite.cpp" />
     <ClCompile Include="..\include\gEngine\Surface.cpp" />
+    <ClCompile Include="..\include\gEngine\Text.cpp" />
     <ClCompile Include="..\include\gEngine\Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

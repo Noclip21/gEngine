@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -39,6 +40,20 @@ namespace utils
 	};
 
 	
+	static string toStringi(int n)
+	{
+		stringstream ss;
+		ss << n;
+		return ss.str();
+	}
+	static string toStringd(double n)
+	{
+		stringstream ss;
+		ss << n;
+		return ss.str();
+	}
+
+
 		// Array methods
 	template <class T>
 	static int findObject(T &obj,vector<T*> &v)
@@ -77,20 +92,6 @@ namespace utils
 			return true;
 		}
 		return false;
-	}
-	
-
-		// Object methods
-	template <typename T>
-	static void kill(T &obj)
-	{
-		if(&obj) delete &obj;
-	}
-	template <typename T>
-	static void kill(T **obj)
-	{
-		if(*obj) delete *obj;
-		*obj = NULL;
 	}
 
 

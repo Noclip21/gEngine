@@ -1,6 +1,6 @@
 #include "Sprite.h"
 using namespace utils;
-#include <Windows.h>
+
 
 
 vector<Sprite*> Sprite::objects;
@@ -143,8 +143,8 @@ GLuint Sprite::newTexture(SDL_Surface *surface)
 		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
  
-		glTexImage2D( GL_TEXTURE_2D,0,bpp,surface->w,surface->h, 0,
-							format,GL_UNSIGNED_BYTE,surface->pixels);
+		glTexImage2D(GL_TEXTURE_2D,0,bpp,surface->w,surface->h,0,
+					format,GL_UNSIGNED_BYTE,surface->pixels);
 	}
 	
 	return id;
@@ -161,12 +161,12 @@ GLuint Sprite::newTexture(char *src)
 
 
 
-void Sprite::deleteBmp(SDL_Surface **surface)
+void Sprite::deleteBmp(SDL_Surface *surface)
 {
-	SDL_FreeSurface(*surface);
+	SDL_FreeSurface(surface);
 }
 
-void Sprite::deleteTexture(GLuint &id)
+void Sprite::deleteTexture(GLuint id)
 {
 	glDeleteTextures(1,&id);
 }
@@ -185,7 +185,7 @@ void Sprite::setTexture(GLuint id)
 	glBindTexture(GL_TEXTURE_2D,_id);
 	{
 		glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH,&_width);
-		glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH,&_height);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&_height);
 	}
 }
 
@@ -196,7 +196,7 @@ void Sprite::setTexture(SDL_Surface *surface)
 
 void Sprite::setTexture(char *src)
 {
-	setTexture(newTexture(src));	
+	setTexture(newTexture(src));
 }
 
 

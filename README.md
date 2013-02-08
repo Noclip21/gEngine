@@ -26,8 +26,11 @@ int main(int argc,char *argv[])
 	// Precache resource pack
 	Resource::cache("foo.wad");
 
+	// Create a screen to display the sprites
+	Screen screen(NULL,0,0,800,600);
+
 	char	*img =		"bar.bmp";		// Image in resource pack
-	Surface	*parent =	Main::root();	// Root parent
+	Surface	*parent =	&screen;		// Screen
 	double	posx =		0;
 	double	posy =		0;
 

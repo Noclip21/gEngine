@@ -39,8 +39,8 @@ public:
 	static GLuint newTexture	(SDL_Surface *surface);
 	static GLuint newTexture	(char *src);
 
-	static void deleteBmp		(SDL_Surface **surface);
-	static void deleteTexture	(GLuint &id);
+	static void deleteBmp		(SDL_Surface *surface);
+	static void deleteTexture	(GLuint id);
 	void deleteTexture			();
 	
 	void setTexture(GLuint id);

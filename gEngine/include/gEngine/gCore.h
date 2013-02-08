@@ -10,6 +10,7 @@
 #include "Main.h"
 #include "Surface.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "Animation.h"
 #include "Screen.h"
 #include "Camera.h"

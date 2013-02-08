@@ -57,6 +57,9 @@
     <ClInclude Include="..\include\gEngine\Audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\gEngine\Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\include\gEngine\Camera.cpp">
@@ -90,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\include\gEngine\Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\gEngine\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

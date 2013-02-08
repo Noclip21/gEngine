@@ -80,17 +80,7 @@ bool Main::init()
 	glClearColor(0,0,0,0);
 	glClearDepth(1.0f);
  
-	//glViewport(0,0,_w,_h);
- 
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
- 
-	//glOrtho(0,_w,_h,0,1,-1);
- 
-	//glMatrixMode(GL_MODELVIEW);
- 
 	glEnable(GL_TEXTURE_2D);
-	//glLoadIdentity();
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);

@@ -12,8 +12,6 @@
 #include "Utils.h"
 #include "Object.h"
 
-using namespace utils;
-
 
 #include "prologue.h"
 class G_DECLSPEC Surface : public Object
