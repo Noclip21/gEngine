@@ -18,6 +18,7 @@ namespace utils
 
 		inline vector2()						{ x = 0; y = 0;										}
 		inline vector2(double px,double py)		{ x = px; y = py;									}
+		inline vector2 operator = (double n)	{ return vector2(n,n);								}
 		inline vector2 operator + (double n)	{ return vector2(x+n,y+n);							}
 		inline vector2 operator - (double n)	{ return vector2(x-n,y-n);							}
 		inline vector2 operator * (double n)	{ return vector2(x*n,y*n);							}
@@ -31,6 +32,7 @@ namespace utils
 
 		inline vector3()								{ x = y = z = 0;										}
 		inline vector3(	double px,double py,double pz)	{ x = px; y = py; z = pz;								}
+		inline vector3 operator = (double n)			{ return vector3(n,n,n);								}
 		inline vector3 operator + (double n)			{ return vector3(x+n,y+n,z+n);							}
 		inline vector3 operator - (double n)			{ return vector3(x-n,y-n,z-n);							}
 		inline vector3 operator * (double n)			{ return vector3(x*n,y*n,z*n);							}
@@ -95,10 +97,35 @@ namespace utils
 	}
 
 
-		// Math methods
-	static double dist(pair<double,double> pos1,pair<double,double> pos2)
+		// Math functions
+	static double dist(vector2 p1,vector2 p2)
 	{
-		return sqrt(pow(pos1.first - pos2.first,2) + pow(pos1.second - pos2.second,2));
+		return sqrt(pow(p1.x - p2.x,2) + pow(p1.y - p2.y,2));
+	}
+	static double ang(vector2 p1,vector2 p2)
+	{
+		double angle = 0;
+		if(p1.x-p2.x != 0)
+			angle = atan((p1.y-p2.y)/(p1.x-p2.x));
+
+		if(p1.x < p2.x) return angle;
+		else			return angle + PI;
+	}
+	static bool left(vector2 p,vector2 lp1,vector2 lp2)
+	{
+		if(lp1.y == lp2.y) return (p.y < lp1.y && p.y < lp2.y);
+		if(lp1.x == lp2.x) return (p.x < lp1.x);
+			
+		double a = (lp2.y - lp1.y)/(lp2.x - lp1.x);
+		double b = lp1.y - a*lp1.x;
+		double x = (p.y - b)/a;
+			
+		return (p.x < x);
+	}
+	static bool segIntersec(vector2 l1p1,vector2 l1p2,vector2 l2p1,vector2 l2p2)
+	{
+		return (left(l1p1,l2p1,l2p2) != left(l1p2,l2p1,l2p2) &&
+				left(l2p1,l1p1,l1p2) != left(l2p2,l1p1,l1p2));
 	}
 }
 #include "epilogue.h"

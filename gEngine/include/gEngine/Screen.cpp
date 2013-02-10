@@ -65,7 +65,7 @@ void Screen::blint(Sprite *sprite)
 			glBindTexture(GL_TEXTURE_2D,sprite->id());
 			{
 				vector2 p =		sprite->globalPos() - globalPos();
-				vector2 o =		sprite->globalOrigin();
+				vector2 o =		sprite->globalOrigin()*sprite->scale;
 				double rot =	sprite->globalRotation();
 				float r =		sprite->globalRed();
 				float g =		sprite->globalGreen();

@@ -39,6 +39,8 @@ SDL_Surface* Sprite::loadBmp(char *src)
 	void *mem = 0;
 	int size;
 	Resource::fetch(src,&mem,&size);
+	if(!mem) return NULL;
+
 	SDL_RWops *data = SDL_RWFromMem(mem,size*sizeof(char));
 	if(!data) return NULL;
 	

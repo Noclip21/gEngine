@@ -21,7 +21,7 @@ Camera::Camera(int screenWidth,
 {
 	objects.push_back(this);
 
-	delay = 0.1f;
+	delay = 0.9f;
 
 	_offset = vector2(screenWidth/2,screenHeight/2);
 	_wrapper = wrapper;
@@ -46,6 +46,6 @@ void Camera::Camera_display()
 		if(alive(_target))	pos = _target->pos;
 		else				pos = _pos;
 
-		_wrapper->avel = (_offset - pos - _wrapper->pos)*delay;
+		_wrapper->avel = (_offset - pos - _wrapper->pos)*(1-delay);
 	}
 }

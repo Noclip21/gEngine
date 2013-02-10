@@ -19,19 +19,15 @@ public:
 	static vector2 mouse;
 
 	static bool keyDown(int key);
-
-
-	/*bool MouseButtonDown();
-	bool MouseButtonUp();
-
-	bool MouseMotion();*/
+	static bool mouseButtonDown(int buttom);
 
 	Event();
 	~Event();
 
 private:
 
-	static vector<SDLKey>	keys;
+	static vector<SDLKey>	_keys;
+	static vector<Uint8>	_buttons;
 
 	void Event_display();
 };

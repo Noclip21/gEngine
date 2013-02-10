@@ -23,6 +23,7 @@ public:
 	void pause();
 	void pause(int frame);
 	void play(int frame);
+	void play(char *name);
 	void stop();
 	int  numFrames();
 
@@ -32,8 +33,7 @@ public:
 				double posy = 0);
 	~Animation();
 	
-
-	void setAnimation(char *name);
+	
 	void addAnimation(	char	*name,
 						int		 time,
 						char	*sprites[],
@@ -46,7 +46,7 @@ private:
 	{
 		char	*name;
 		int		 time;
-		vector<GLuint> ids;
+		vector<GLuint> id;
 	};
 
 	vector<animPack*>	 _animations;
