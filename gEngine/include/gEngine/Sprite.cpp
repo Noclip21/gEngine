@@ -45,6 +45,7 @@ SDL_Surface* Sprite::loadBmp(char *src)
 	if(!data) return NULL;
 	
 	SDL_Surface *temp = SDL_LoadBMP_RW(data,0);
+	SDL_FreeRW(data);
 	if(!temp) return NULL;
 	
 	SDL_LockSurface(temp);
@@ -70,7 +71,7 @@ SDL_Surface* Sprite::loadBmp(char *src)
 		case SPRITE_OPAQUE:
 		{
 			SDL_Surface *formated = SDL_DisplayFormatAlpha(temp);
-			SDL_FreeSurface(temp);
+			deleteBmp(temp);
 			return formated;
 		}
 
@@ -78,13 +79,13 @@ SDL_Surface* Sprite::loadBmp(char *src)
 		{
 			SDL_SetColorKey(temp,SDL_SRCCOLORKEY|SDL_RLEACCEL,SDL_MapRGB(temp->format,keyRed8,keyGreen8,keyBlue8));
 			SDL_Surface *formated = SDL_DisplayFormatAlpha(temp);
-			SDL_FreeSurface(temp);
+			deleteBmp(temp);
 			return formated;
 		}
 		case SPRITE_DECAL:
 		{
 			SDL_Surface *formated = SDL_DisplayFormatAlpha(temp);
-			SDL_FreeSurface(temp);
+			deleteBmp(temp);
 
 			SDL_LockSurface(formated);
 			
@@ -158,7 +159,10 @@ GLuint Sprite::newTexture(char *src)
 	
 	if(!surface) return NULL;
 	
-	return newTexture(surface);
+	GLuint id = newTexture(surface);
+	deleteBmp(surface);
+
+	return id;
 }
 
 
@@ -170,12 +174,12 @@ void Sprite::deleteBmp(SDL_Surface *surface)
 
 void Sprite::deleteTexture(GLuint id)
 {
-	glDeleteTextures(1,&id);
+	if(id) glDeleteTextures(1,&id);
 }
 
 void Sprite::deleteTexture()
 {
-	if(_id) deleteTexture(_id);
+	deleteTexture(_id);
 }
 
 

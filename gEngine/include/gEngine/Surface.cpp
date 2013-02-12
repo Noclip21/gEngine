@@ -13,7 +13,7 @@ double	Surface::globalRotation()	{ return _parent?rotation+_parent->globalRotati
 float	Surface::globalRed()		{ return _parent?red+_parent->globalRed()			:red;		}
 float	Surface::globalGreen()		{ return _parent?green+_parent->globalGreen()		:green;		}
 float	Surface::globalBlue()		{ return _parent?blue+_parent->globalBlue()			:blue;		}
-float	Surface::globalAlpha()		{ return _parent?alpha+_parent->globalAlpha()		:alpha;		}
+float	Surface::globalAlpha()		{ return _parent?alpha*_parent->globalAlpha()		:alpha;		}
 vector2 Surface::mouse()			{ return Event::mouse-globalPos();								}
 vector2	Surface::oldPos()			{ return _oldpos;												}
 double	Surface::oldrot()			{ return _oldrot;												}

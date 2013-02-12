@@ -67,6 +67,13 @@ Animation::Animation(	Surface *parent,
 
 Animation::~Animation()
 {
+	for(size_t i=0; i<_animations.size(); ++i)
+	{
+		for(size_t j=0; j<_animations[i]->id.size(); ++j)
+			deleteTexture(_animations[i]->id[j]);
+		
+		delete _animations[i];
+	}
 	removeObject(*this,objects);
 }
 
