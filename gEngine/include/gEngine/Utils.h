@@ -18,7 +18,7 @@ namespace utils
 
 		inline vector2()						{ x = 0; y = 0;										}
 		inline vector2(double px,double py)		{ x = px; y = py;									}
-		inline vector2 operator = (double n)	{ return vector2(n,n);								}
+		inline vector2& operator = (double n)	{ this->x = this->y = n; return *this;								}
 		inline vector2 operator + (double n)	{ return vector2(x+n,y+n);							}
 		inline vector2 operator - (double n)	{ return vector2(x-n,y-n);							}
 		inline vector2 operator * (double n)	{ return vector2(x*n,y*n);							}
@@ -32,7 +32,7 @@ namespace utils
 
 		inline vector3()								{ x = y = z = 0;										}
 		inline vector3(	double px,double py,double pz)	{ x = px; y = py; z = pz;								}
-		inline vector3 operator = (double n)			{ return vector3(n,n,n);								}
+		inline vector3& operator = (double n)			{ this->x = this->y = this->z = n; return *this;					}
 		inline vector3 operator + (double n)			{ return vector3(x+n,y+n,z+n);							}
 		inline vector3 operator - (double n)			{ return vector3(x-n,y-n,z-n);							}
 		inline vector3 operator * (double n)			{ return vector3(x*n,y*n,z*n);							}
